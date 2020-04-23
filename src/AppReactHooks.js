@@ -10,14 +10,14 @@ const app = props => {
   /**
    * Use state returns an array with exactly two els (the state, callback fn)
    */
-  const [personState, setPersonstate] = useState({
-    persons: [
-      { name: "Max1", age: 28 },
-      { name: "Max2", age: 28 },
-      { name: "Max3", age: 28 }
+  // const [personState, setPersonstate] = useState({
+  //   persons: [
+  //     { name: "Max1", age: 28 },
+  //     { name: "Max2", age: 28 },
+  //     { name: "Max3", age: 28 }
 
-    ]
-  })
+  //   ]
+  // })
 
   const switchNameHandler = () => {
     console.log('Was clicked!');
