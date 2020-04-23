@@ -33,8 +33,15 @@ class App extends Component {
       ]
     })
   }
-
   render() {
+    const style = {
+      backgroundColor: 'white',
+      font: 'inheret', //from bg
+      border: '1x solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    };
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
@@ -42,7 +49,9 @@ class App extends Component {
         {/* we call it with () bc this "()=>fn("args")" is useful where we can pass args, and it is
         resolved to call back the function, it is not executed on time 
         However, BIND is better and more efficient*/}
-        <button onClick={() => this.switchNameHandler('Maximilian!!')}>Switch Name</button>
+        <button
+          style={style}
+          onClick={() => this.switchNameHandler('Maximilian!!')}>Switch Name</button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age} />
