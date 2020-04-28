@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium, {StyleRoot} from 'radium';//to acess advanced features in radium like media queries
 
 class App extends Component {
   state = {
@@ -9,7 +10,8 @@ class App extends Component {
       { id: 'asdsa1', name: 'Manu', age: 29 },
       { id: 'asdsa2', name: 'Stephanie', age: 26 }
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPersons: false
   }
 
   switchNameHandler = (newName) => {
@@ -32,7 +34,7 @@ class App extends Component {
     });
 
     //copy
-    const person = { ...this.state.persons[personIndex] }
+    const person = { ...this.state.persons[personIndex] };
 
     //now mutating a copy
     person.name = event.target.value;
@@ -57,13 +59,17 @@ class App extends Component {
   }
   render() {
     const style = {
-      backgroundColor: 'white',
-      font: 'inheret', //from bg
-      border: '1x solid blue',
+      backgroundColor: 'green',
+      font: 'inherit', //from bg
+      border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
-    let persons = null
+    let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -76,28 +82,48 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 key={person.id} //it's good to have this for react to know what to change in the ui
-                change={(event) => this.nameChangedHandler(event, person.id)}
+                changed={(event) => this.nameChangedHandler(event, person.id)}
+                //change not changed
               />
             })
           }
         </div>
       );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
+    }
+    // let classes = ['red','bold'].join(' '); //"will be "red bold" "
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');// classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');//// classes = ['red','bold']
     }
     return (
-      <div className="App">
+      // We need to wrap our app with styleroot for radium to work
+      <StyleRoot>
+        <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
+        <p className={classes.join(' ')}>This is really working!</p>
         {/* we call it with () bc this "()=>fn("args")" is useful where we can pass args, and it is
-        resolved to call back the function, it is not executed on time 
-        However, BIND is better and more efficient*/}
+      resolved to call back the function, it is not executed on time
+      However, BIND is better and more efficient*/}
         <button
           style={style}
           onClick={this.togglePersons}>Switch Name</button>
         {persons}{/*  clean way */}
       </div>
+      </StyleRoot>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+
+export default Radium(App);
+//Radium is useful in media queries
+// and psuedo selectors like :hover ^

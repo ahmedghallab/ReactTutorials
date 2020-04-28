@@ -1,8 +1,17 @@
 import React from 'react';
+import Radium from 'radium';//
 import './Person.css'
-const person = ( props ) => {
+const person = (props) => {
+    const style = {
+        //still a js property name
+        // it is a string so it is a valid name
+        '@media (min-width: 500px)': {
+            width: '450px'
+        }
+    };
     return (
-        <div className="Person">
+        // style will override the class setting by default
+        <div className="Person" style={style}>
             {/* two way binding */}
             <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
             <p>{props.children}</p>
@@ -11,4 +20,4 @@ const person = ( props ) => {
     )
 };
 
-export default person;
+export default Radium(person);
