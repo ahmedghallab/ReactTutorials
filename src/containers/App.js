@@ -59,7 +59,21 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    // this.setState({ persons: persons });
+    // Behind the scenes, set state does not immediately trigger
+    // an update of the state of this component in a re-render cycle,
+    // instead it's basically scheduled by React and React will then perform the state update and the re-render
+    // Behind the scenes, set state does not immediately trigger
+    // an update of the state of this component in a re-render cycle,
+    // instead it's basically scheduled by React and React will then perform the state update and the re-render, be instantly especially in simple applications like this one
+    // but it's not guaranteed
+    this.setState((oldState, props) => {
+      return {
+        persons: persons,
+        changeCounter: this.state.changeCounter + 1
+      }
+    })
+
   };
 
   deletePersonHandler = personIndex => {
