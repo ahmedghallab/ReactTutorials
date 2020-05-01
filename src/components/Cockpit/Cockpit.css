@@ -1,20 +1,21 @@
-.Red{
+
+.red {
     color: red;
   }
   
-  .Bold{
+  .bold {
     font-weight: bold;
   }
-.Cockpit button {
-    background-color: green;
-    color: white;
-    font: inherit;
+  
+  .Cockpit button {
     border: 1px solid blue;
-    padding: 8px;
+    padding: 16px;
+    background-color: green;
+    font: inherit;
+    color: white;
     cursor: pointer;
   }
   
-  /* needs to be .Cockpit not .App */
   .Cockpit button:hover {
     background-color: lightgreen;
     color: black;
@@ -26,4 +27,5 @@
   
   .Cockpit button.Red:hover {
     background-color: salmon;
+    color: black;
   }
