@@ -1,11 +1,13 @@
 {
-  "name": "react-complete-guid",
+  "name": "react-complete-guide",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "1.1.5"
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.0.13"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,102 +1,45 @@
 import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person';
-
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
+import Courses from './containers/Courses/Courses';
+import Users from './containers/Users/Users';
+import NotFound from './containers/NotFound/NotFound'
+import Course from './containers/Course/Course'
 class App extends Component {
-  state = {
-    persons: [
-      { id: '0', name: 'Max', age: 28 },
-      { id: 'asdsa1', name: 'Manu', age: 29 },
-      { id: 'asdsa2', name: 'Stephanie', age: 26 }
-    ],
-    otherState: 'some other value'
-  }
-
-  switchNameHandler = (newName) => {
-    // console.log('Was clicked!');
-    // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Stephanie', age: 27 }
-      ],
-      otherState: 'different val',
-      showPersons: false
-    })
-  }
-
-  nameChangedHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id;
-    });
-
-    //copy
-    const person = { ...this.state.persons[personIndex] }
-
-    //now mutating a copy
-    person.name = event.target.value;
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
-    this.setState({ persons: persons });
-  }
-
-  //this syntax is usually better for a method, so
-  // this keyword is referencing the class
-  togglePersons = () => {
-    const doesShow = this.state.showPersons;
-    this.setState({ showPersons: !doesShow }) // 
-  }
-
-
-  deletePersons = (personIndex) => {
-    const person = [...this.state.persons];// fethc all the persons, but create a copy
-    // by spreading out all the persons array to a list of elements
-    person.splice(personIndex, 1);// splice first person
-    this.setState({ persons: person })
-  }
   render() {
-    const style = {
-      backgroundColor: 'white',
-      font: 'inheret', //from bg
-      border: '1x solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-    let persons = null
-    if (this.state.showPersons) {
-      persons = (
-        <div>
-          {
-            // mapping the .state.persons array to 
-            // jsx object array, that react will pull out
-            this.state.persons.map((person, index) => {
-              return <Person
-                click={() => this.deletePersons(index)}
-                name={person.name}
-                age={person.age}
-                key={person.id} //it's good to have this for react to know what to change in the ui
-                change={(event) => this.nameChangedHandler(event, person.id)}
-              />
-            })
-          }
-        </div>
-      );
-    }
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        {/* we call it with () bc this "()=>fn("args")" is useful where we can pass args, and it is
-        resolved to call back the function, it is not executed on time 
-        However, BIND is better and more efficient*/}
-        <button
-          style={style}
-          onClick={this.togglePersons}>Switch Name</button>
-        {persons}{/*  clean way */}
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <header>
+            <p>
+              <Link to="/">Home  </Link>
+              <Link to="/users">Users  </Link>
+              <Link to="/courses">Courses</Link>
+            </p>
+          </header>
+          <Switch>
+            <Route path="/assignment" exact>
+              <ol style={{ textAlign: 'left' }}>
+                <li>Add Routes to load "Users" and "Courses" on different pages (by entering a URL, without Links)</li>
+                <li>Add a simple navigation with two links => One leading to "Users", one leading to "Courses"</li>
+                <li>Make the courses in "Courses" clickable by adding a link and load the "Course" component in the place of "Courses" (without passing any data for now)</li>
+                <li>Pass the course ID to the "Course" page and output it there</li>
+                <li>Pass the course title to the "Course" page - pass it as a param or score bonus points by passing it as query params (you need to manually parse them though!)</li>
+                <li>Load the "Course" component as a nested component of "Courses"</li>
+                <li>Add a 404 error page and render it for any unknown routes</li>
+                <li>Redirect requests to /all-courses to /courses (=> Your "Courses" page)</li>
+              </ol>
+            </Route>
+            <Route path="/" exact component={Users} />
+            <Route path="/" exact component={Courses} />
+            <Route path="/courses" exact component={Courses} />
+            <Route path="/users" exact component={Users} />
+            <Route path="/courses/course/:id/:title" exact component={Course} />
+            <Route component={NotFound}/>
+          </Switch>
+        </div>
+
+      </BrowserRouter>
     );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
